@@ -9,3 +9,6 @@ Et CRUD-program til en filmsamling – 1. semester, datamatiker, EK.
 
 | Fornavn | GitHub |
 |   Emil  | Elqvist|
+
+| Fornavn | GitHub |
+| Malthe  | MaltheAskjaer |
