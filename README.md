@@ -6,3 +6,6 @@ Et CRUD-program til en filmsamling – 1. semester, datamatiker, EK.
 
 | Fornavn | GitHub |
 |Nikolai  - NikolaiiB|
+
+| Fornavn | GitHub |
+|   Emil  | Elqvist|
