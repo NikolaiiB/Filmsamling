@@ -9,6 +9,7 @@ public class Controller {
 
     public void addMovie(String title, String director, int yearCreated, boolean inColor,
                          int lengthInMinutes, String genre){
+        movieCollection.addMovie(title, director, yearCreated, inColor, lengthInMinutes, genre);
     }
 
     public ArrayList<Movie> getMovies() {
