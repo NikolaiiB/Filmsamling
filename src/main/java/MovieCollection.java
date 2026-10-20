@@ -16,7 +16,7 @@ public class MovieCollection {
     }
 
     public ArrayList<Movie> getMovies() {
-        return null;   // TODO US3
+        return movies;   // TODO US3
     }
 
     public int getNumberOfMovies() {
