@@ -26,6 +26,6 @@ public class Controller {
     }
 
     public boolean deleteMovie(Movie movie){
-        return false;
+        return movieCollection.deleteMovie(movie);
     }
 }
