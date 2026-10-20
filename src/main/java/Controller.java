@@ -20,9 +20,9 @@ public class Controller {
         return movieCollection.searchMovies(searchText);
     }
 
-    public boolean editMovie(Movie movie, String title, String director, int yearCreated, boolean inColor,
+    public boolean editMovie(Movie movie, String title, String director, int yearCreated, String inColor,
                              int lengthInMinutes, String genre){
-        return false;
+        return movieCollection.editMovie(movie, title, director, yearCreated, inColor, lengthInMinutes, genre);
     }
 
     public boolean deleteMovie(Movie movie){
