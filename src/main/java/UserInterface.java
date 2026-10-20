@@ -57,7 +57,7 @@ public class UserInterface {
             String genre = scanner.nextLine().trim();
 
             controller.addMovie(title, author, yearCreated, inColor, length, genre);
-            System.out.println("Film tilføjet");
+            System.out.println(title + " er tilføjet til samlingen.");
     }
 
     public void showMovies(ArrayList<Movie> movies){
@@ -78,15 +78,26 @@ public class UserInterface {
         System.out.print("Søg efter titel: ");
         String title = scanner.nextLine().trim();
 
-        System.out.println(controller.searchMovies(title).size() + " film matcher " + "'" + title + "'");
+        ArrayList<Movie> matches = controller.searchMovies(title);
 
-        showMovies(controller.searchMovies(title));
+        if(matches.isEmpty()){
+            System.out.println("Ingen film matcher søgningen");
+        }
+        else{
+            System.out.println(matches.size() + " film matcher '" + title + "'");
+            showMovies(matches);
+        }
     }
 
     public void editMovie(){
         System.out.print("Søg efter titel: ");
         String title = scanner.nextLine().trim();
         ArrayList<Movie> matches = controller.searchMovies(title);
+
+        if(matches.isEmpty()){
+            System.out.println("Ingen film matcher søgningen");
+            return;
+        }
 
         int count = 1;
         for(Movie movie : matches) {

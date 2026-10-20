@@ -26,7 +26,7 @@ public class MovieCollection {
     public ArrayList<Movie> searchMovies(String searchText) {
         ArrayList<Movie> matchingMovies = new ArrayList<>();
         for (Movie movie : movies){
-          if ( movie.getTitle().contains(searchText)) {
+          if ( movie.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
               matchingMovies.add(movie);
           }
         }
