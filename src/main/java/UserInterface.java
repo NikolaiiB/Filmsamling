@@ -21,7 +21,30 @@ public class UserInterface {
                 choice = scanner.nextLine();
 
                 switch (choice) {
-                    case "1" -> System.out.println("Du har tilføjet en film\n");
+                    case "1" -> {
+                        System.out.print("Titel: ");
+                        String title = scanner.nextLine().trim();
+
+                        System.out.print("Instruktør: ");
+                        String author = scanner.nextLine().trim();
+
+                        System.out.print("Årstal: ");
+                        int yearCreated = Integer.parseInt(scanner.nextLine().trim());
+
+                        System.out.print("I farve? (ja/nej): ");
+                        String answer = scanner.nextLine().trim();
+                        Boolean inColor = (answer.equalsIgnoreCase("ja"));
+
+                        System.out.print("Længde i minutter: ");
+                        int length = Integer.parseInt(scanner.nextLine().trim());
+
+                        System.out.print("Genre: ");
+                        String genre = scanner.nextLine().trim();
+
+                        controller.addMovie(title, author, yearCreated, inColor, length, genre);
+                        System.out.println("Film tilføjet");
+
+                    }
                     case "2" -> {
                         if(controller.getMovies().isEmpty()) {
                             System.out.println("Filmsamlingen er tom");
