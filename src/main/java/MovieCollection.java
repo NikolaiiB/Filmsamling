@@ -24,7 +24,13 @@ public class MovieCollection {
     }
 
     public ArrayList<Movie> searchMovies(String searchText) {
-        return null;   // TODO US4
+        ArrayList<Movie> matchingMovies = new ArrayList<>();
+        for (Movie movie : movies){
+          if ( movie.getTitle().contains(searchText)) {
+              matchingMovies.add(movie);
+          }
+        }
+        return matchingMovies;
     }
 
     public boolean editMovie(Movie movie, String title, String director, int yearCreated,
