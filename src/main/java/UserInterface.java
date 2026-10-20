@@ -10,8 +10,24 @@ public class UserInterface {
         }
 
         public void startProgram() {
-            // TODO US2 - Menu
+            String choice = "";
+            while (!choice.equalsIgnoreCase("0")) {
+                System.out.println();
+                System.out.println("1. Opret en film");
+                System.out.println("0. Afslut");
+                System.out.print("Vælg: ");
+
+                choice = scanner.nextLine();
+
+                switch (choice) {
+                    case "1" -> System.out.println("Du har tilføjet en film\n");
+                    case "0" -> System.out.println("Program afsluttet");
+                    default -> System.out.println("Ugyldig kommando");
+                }
+            }
         }
+
+
 
 
     }
