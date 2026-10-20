@@ -13,7 +13,7 @@ public class Controller {
     }
 
     public ArrayList<Movie> getMovies() {
-        return null;   // TODO US3
+        return movieCollection.getMovies();
     }
 
     public ArrayList<Movie> searchMovies(String searchText) {
