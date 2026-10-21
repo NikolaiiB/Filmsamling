@@ -5,50 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class MovieTest {
 
     @Test
-    void getTitle() {
-    }
+    void movieAttributeTest(){
+        //Arrange / Act
+        Movie movie = new Movie("Jaws", "SP", 1975, true, 124, "Thriller");
 
-    @Test
-    void getDirector() {
-    }
-
-    @Test
-    void getYearCreated() {
-    }
-
-    @Test
-    void isInColor() {
-    }
-
-    @Test
-    void getLengthInMinutes() {
-    }
-
-    @Test
-    void getGenre() {
-    }
-
-    @Test
-    void setTitle() {
-    }
-
-    @Test
-    void setDirector() {
-    }
-
-    @Test
-    void setYearCreated() {
-    }
-
-    @Test
-    void setInColor() {
-    }
-
-    @Test
-    void setLengthInMinutes() {
-    }
-
-    @Test
-    void setGenre() {
+        //Assert
+        assertEquals("Jaws", movie.getTitle());
+        assertEquals("SP", movie.getDirector());
+        assertEquals(1975, movie.getYearCreated());
+        assertEquals(true, movie.isInColor());
+        assertEquals(124, movie.getLengthInMinutes());
+        assertEquals("Thriller", movie.getGenre());
     }
 }
