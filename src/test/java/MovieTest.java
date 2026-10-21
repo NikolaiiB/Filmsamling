@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,5 +17,17 @@ class MovieTest {
         assertEquals(true, movie.isInColor());
         assertEquals(124, movie.getLengthInMinutes());
         assertEquals("Thriller", movie.getGenre());
+    }
+
+    @Test
+    void setTitleChangeTest(){
+        //Arrange
+        Movie movie = new Movie("Jaws", "SP", 1975, true, 124, "Thriller");
+
+        //Act
+        movie.setTitle("Dødens gab");
+
+        //Assert
+        assertEquals("Dødens gab", movie.getTitle());
     }
 }
