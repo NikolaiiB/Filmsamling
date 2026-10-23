@@ -19,6 +19,15 @@ class MovieCollectionTest {
 
     @Test
     void getNumberOfMovies() {
+        //Arrange
+        MovieCollection collection2 = new MovieCollection();
+
+        //Act
+        int size = collection2.getNumberOfMovies();
+
+        //Assert
+        assertEquals(0, size);
+
     }
 
     @Test
