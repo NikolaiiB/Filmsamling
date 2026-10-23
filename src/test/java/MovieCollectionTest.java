@@ -64,15 +64,39 @@ class MovieCollectionTest {
     }
 
     @Test
-    void searchMovies2() {
+    void searchMoviesWithoutMatch() {
+        //Arrange
+        ArrayList<Movie> matches;
+
+        //Act
+        matches = collection.searchMovies("Harry");
+
+        //Assert
+        assertEquals(0, matches.size());
+
     }
 
     @Test
-    void searchMovies3() {
+    void searchMoviesOneMatch() {
+        ArrayList<Movie> matches;
+
+        //Act
+        matches = collection.searchMovies("Casa");
+
+        //Assert
+        assertEquals(1, matches.size());
     }
 
     @Test
-    void searchMovies4() {
+    void searchMoviesCaps() {
+        ArrayList<Movie> matches;
+
+        //Act
+        matches = collection.searchMovies("CaSA");
+
+        //Assert
+        assertEquals(1, matches.size());
+
     }
 
     @Test
