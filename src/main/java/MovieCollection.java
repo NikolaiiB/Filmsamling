@@ -20,7 +20,7 @@ public class MovieCollection {
     }
 
     public int getNumberOfMovies() {
-        return 0;      // TODO
+        return movies.size();      // TODO
     }
 
     public ArrayList<Movie> searchMovies(String searchText) {
