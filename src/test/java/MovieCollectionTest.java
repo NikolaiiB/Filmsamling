@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MovieCollectionTest {
@@ -28,7 +30,10 @@ class MovieCollectionTest {
     }
 
     @Test
-    void searchMovies() {
+    void searchWithSeveralMatches() {
+        ArrayList<Movie> result = collection.searchMovies("god");
+
+        assertEquals(2, result.size());
     }
 
     @Test
@@ -52,10 +57,26 @@ class MovieCollectionTest {
     }
 
     @Test
-    void deleteMovie() {
+    void deleteMovieRemovesIt() {
+        // Arrange
+        Movie casablanca = collection.searchMovies("Casablanca").get(0);
+
+        // Act
+        boolean deleted = collection.deleteMovie(casablanca);
+
+        // Assert
+        assertTrue(deleted);
+        assertEquals(2, collection.getNumberOfMovies());
+        assertTrue(collection.searchMovies("Casablanca").isEmpty());
     }
 
     @Test
-    void deleteMovie2() {
+    void deleteMovieNotInCollectionReturnsFalse() {
+        Movie jaws = new Movie("Jaws", "Steven Spielberg", 1975, true, 124, "Thriller");
+
+        boolean deleted = collection.deleteMovie(jaws);
+
+        assertFalse(deleted);
+        assertEquals(3, collection.getNumberOfMovies());
     }
 }
