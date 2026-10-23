@@ -101,10 +101,28 @@ class MovieCollectionTest {
 
     @Test
     void editMovie() {
+        //Arrange
+        collection.getMovies().get(0);
+        Movie movie = collection.getMovies().get(0);
+
+        //Act
+        boolean edit = collection.editMovie(movie,"Harry", "assas", 2020, "yes",210,"Action");
+
+        //Assert
+        assertTrue(edit);
+
     }
 
     @Test
     void editMovie2() {
+        //Arrange
+        Movie movie = new Movie("Harry","asa",20202,true, 2021, "Action");
+
+        //Act
+        boolean edit = collection.editMovie(movie,"Harry", "assas", 2020, "yes",210,"Action");
+
+        //Assert
+        assertFalse(edit);
     }
 
     @Test
