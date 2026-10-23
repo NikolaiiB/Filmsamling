@@ -31,11 +31,29 @@ class MovieCollectionTest {
     }
 
     @Test
-    void addMovie() {
+    void addOneMovie() {
+        //Arrange
+        MovieCollection collection2 = new MovieCollection();
+        collection2.addMovie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
+
+        //Act
+        int size = collection2.getNumberOfMovies();
+
+        //Assert
+        assertEquals(1, size);
+
     }
 
     @Test
-    void addMovie2() {
+    void addMoreMovies() {
+        //Act
+        collection.addMovie("Lucky Luke", "Donald Trump", 1999, false, 20, "Horror");
+        collection.addMovie("Guldbar", "Gulddreng", 2025, true, 432, "Comedy");
+
+        int size = collection.getNumberOfMovies();
+
+        //assert
+        assertEquals(5, size);
     }
 
     @Test
