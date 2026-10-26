@@ -13,6 +13,7 @@ public class UserInterface {
         }
 
         public void startProgram() {
+            System.out.println("Velkommen til min filmsamling");
             String choice = "";
             while (!choice.equalsIgnoreCase("0")) {
                 System.out.println();
@@ -72,12 +73,26 @@ public class UserInterface {
         if(movies.isEmpty()) {
             System.out.println("Filmsamlingen er tom");
         }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
         for(Movie movie : movies) {
             System.out.println();
             System.out.println("Titel: " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
             System.out.println("  Instruktør: " + movie.getDirector());
             System.out.println("  Længde: " + movie.getLengthInMinutes() + " minutter, " + (movie.isInColor() ? "Farver" : "Sort/Hvid"));
             System.out.println("  Genre: " + movie.getGenre());
+
+            if(movie.hasBeenWatched()){
+                System.out.println("  Sidst set: "
+                + movie.getLastWatched().format(formatter)
+                + " (for " + movie.getDaysSinceWatched(LocalDate.now())
+                + " dage siden)");
+            }
+            else{
+                System.out.println("  Sidst set: aldrig");
+            }
+
             System.out.println();
         }
     }
@@ -97,14 +112,14 @@ public class UserInterface {
         }
     }
 
-    public void editMovie(){
+    public Movie selectMovie(){
         System.out.print("Søg efter titel: ");
         String title = scanner.nextLine().trim();
         ArrayList<Movie> matches = controller.searchMovies(title);
 
         if(matches.isEmpty()){
             System.out.println("Ingen film matcher søgningen");
-            return;
+            return null;
         }
 
         int count = 1;
@@ -117,6 +132,16 @@ public class UserInterface {
         int choice = scanner.nextInt();
         scanner.nextLine();
         Movie movie = matches.get(choice-1);
+
+        return movie;
+    }
+
+    public void editMovie(){
+         Movie movie = selectMovie();
+
+         if(movie == null){
+             return;
+         }
 
         System.out.println("Tryk enter for at beholde nuværende værdi.");
 
@@ -158,25 +183,11 @@ public class UserInterface {
     }
 
     public void deleteMovie(){
-        System.out.print("Søg efter titel: ");
-        String title = scanner.nextLine().trim();
-        ArrayList<Movie> matches = controller.searchMovies(title);
+        Movie movie = selectMovie();
 
-        if(matches.isEmpty()){
-            System.out.println("Ingen film matcher søgningen");
+        if(movie == null){
             return;
         }
-
-        int count = 1;
-        for(Movie movie : matches) {
-            System.out.println(count + ". " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
-            count++;
-        }
-
-        System.out.print("Vælg nummer: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        Movie movie = matches.get(choice-1);
 
         System.out.print("Vil du slette " + movie.getTitle() + "? (ja/nej): ");
         String deleteChoice = scanner.nextLine().toLowerCase().trim();
@@ -193,25 +204,11 @@ public class UserInterface {
     }
 
     public void markAsWatched (){
-        System.out.print("Søg efter titel: ");
-        String title = scanner.nextLine().trim();
-        ArrayList<Movie> matches = controller.searchMovies(title);
+        Movie movie = selectMovie();
 
-        if(matches.isEmpty()){
-            System.out.println("Ingen film matcher søgningen");
+        if(movie == null){
             return;
         }
-
-        int count = 1;
-        for(Movie movie : matches) {
-            System.out.println(count + ". " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
-            count++;
-        }
-
-        System.out.print("Vælg nummer: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        Movie movie = matches.get(choice-1);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 

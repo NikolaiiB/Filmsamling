@@ -177,6 +177,8 @@ class MovieCollectionTest {
 
         ArrayList<Movie> result = collection.getMoviesNotWatchedSince(today);
         assertTrue(result.contains(casablanca));
+        assertFalse(result.contains(godfather));
+        assertFalse(result.contains(godzilla));
 
 
 

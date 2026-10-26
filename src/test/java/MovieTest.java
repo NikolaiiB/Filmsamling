@@ -53,6 +53,7 @@ class MovieTest {
 
         //Assert
         assertFalse(movie.hasBeenWatched());
+        assertNull(movie.getLastWatched());
 
     }
 
