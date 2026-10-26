@@ -78,7 +78,14 @@ public class MovieCollection {
     }
 
     public ArrayList<Movie> getMoviesNotWatchedSince(LocalDate date){
-        return null;
+        ArrayList<Movie> result = new ArrayList<>();
+
+        for(Movie movie : movies){
+            if (!movie.hasBeenWatched() || movie.getLastWatched().isBefore(date)) {
+                result.add(movie);
+            }
+        }
+        return result;
     }
 }
 

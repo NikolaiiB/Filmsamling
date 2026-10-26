@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,6 +21,8 @@ public class UserInterface {
                 System.out.println("3. Søg efter film");
                 System.out.println("4. Rediger en film");
                 System.out.println("5. Slet en film");
+                System.out.println("6. Marker en film som set i dag");
+                System.out.println("7. Find film du ikke har set længe");
                 System.out.println("0. Afslut");
                 System.out.print("Vælg: ");
 
@@ -30,6 +34,8 @@ public class UserInterface {
                     case "3" -> searchMovie();
                     case "4" -> editMovie();
                     case "5" -> deleteMovie();
+                    case "6" -> markAsWatched();
+                    case "7" -> daysSinceWatched();
                     case "0" -> System.out.println("Program afsluttet");
                     default -> System.out.println("Ugyldig kommando");
                 }
@@ -185,6 +191,56 @@ public class UserInterface {
             System.out.println("Ugyldigt input. Intet er slettet");
         }
     }
+
+    public void markAsWatched (){
+        System.out.print("Søg efter titel: ");
+        String title = scanner.nextLine().trim();
+        ArrayList<Movie> matches = controller.searchMovies(title);
+
+        if(matches.isEmpty()){
+            System.out.println("Ingen film matcher søgningen");
+            return;
+        }
+
+        int count = 1;
+        for(Movie movie : matches) {
+            System.out.println(count + ". " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
+            count++;
+        }
+
+        System.out.print("Vælg nummer: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        Movie movie = matches.get(choice-1);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        controller.markAsWatched(movie);
+        System.out.println(movie.getTitle() + " er markeret som set " + LocalDate.now().format(formatter));
+    }
+
+    public void daysSinceWatched (){
+        System.out.print("Hvor mange dage siden mindst? ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Film du ikke har set i " + choice + " dage eller aldrig set: ");
+        ArrayList<Movie> result = controller.getMoviesNotWatchedForDays(choice);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        for(Movie movie : result) {
+            if (movie.hasBeenWatched()) {
+                String date = movie.getLastWatched().format(formatter);
+                long days = movie.getDaysSinceWatched(LocalDate.now());
+                System.out.println("  " + movie.getTitle() + " - sidst set: " + date + " (for " + days + " dage siden)");
+            } else {
+                System.out.println("  " + movie.getTitle() + " - sidst set: aldrig");
+            }
+        }
+
+    }
+
 
 
     }
