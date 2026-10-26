@@ -80,6 +80,5 @@ public class MovieCollection {
     public ArrayList<Movie> getMoviesNotWatchedSince(LocalDate date){
         return null;
     }
-
 }
 
