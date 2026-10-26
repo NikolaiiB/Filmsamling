@@ -1,12 +1,14 @@
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MovieTest {
 
     @Test
-    void movieAttributeTest(){
+    void movieAttributeTest() {
         //Arrange / Act
         Movie movie = new Movie("Jaws", "SP", 1975, true, 124, "Thriller");
 
@@ -20,7 +22,7 @@ class MovieTest {
     }
 
     @Test
-    void setTitleChangeTest(){
+    void setTitleChangeTest() {
         //Arrange
         Movie movie = new Movie("Jaws", "SP", 1975, true, 124, "Thriller");
 
@@ -29,5 +31,18 @@ class MovieTest {
 
         //Assert
         assertEquals("Dødens gab", movie.getTitle());
+    }
+
+    @Test
+    void daysSinceWatchedCountsAcrossMonths() {
+        // Arrange
+        Movie movie = new Movie("Jaws", "Steven Spielberg", 1975, true, 124, "Thriller");
+        movie.markAsWatched(LocalDate.of(2025, 9, 30));
+
+        // Act
+        long days = movie.getDaysSinceWatched(LocalDate.of(2025, 10, 26));
+
+        // Assert
+        assertEquals(26, days);
     }
 }
