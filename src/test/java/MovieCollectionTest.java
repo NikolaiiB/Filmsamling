@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -148,4 +149,38 @@ class MovieCollectionTest {
         assertFalse(deleted);
         assertEquals(3, collection.getNumberOfMovies());
     }
+
+    @Test
+    void movieNotWatchedInNotWatchedSinceList(){
+        collection.addMovie("Jaws", "Steven Spielberg", 1975, true, 124, "Thriller");
+        LocalDate date = LocalDate.of(2026, 10, 26);
+
+        Movie jaws = collection.getMovies().get(3);
+
+        ArrayList<Movie> result = collection.getMoviesNotWatchedSince(date);
+        assertTrue(result.contains(jaws));
+    }
+
+    @Test
+    void onlyMoviesWatchedBeforeDateAreIncluded(){
+        Movie godfather = collection.getMovies().get(0);
+        Movie casablanca = collection.getMovies().get(1);
+        Movie godzilla = collection.getMovies().get(2);
+
+        LocalDate today = LocalDate.of(2026, 10, 26);
+        LocalDate yesterday = today.minusDays(1);
+        LocalDate tommorrow = today.plusDays(1);
+
+        godfather.markAsWatched(today);
+        casablanca.markAsWatched(yesterday);
+        godzilla.markAsWatched(tommorrow);
+
+        ArrayList<Movie> result = collection.getMoviesNotWatchedSince(today);
+        assertTrue(result.contains(casablanca));
+
+
+
+    }
+
+
 }

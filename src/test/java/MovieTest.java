@@ -45,4 +45,27 @@ class MovieTest {
         // Assert
         assertEquals(26, days);
     }
+
+    @Test
+    void newMovieIsNotWatched(){
+        //Arrange
+        Movie movie = new Movie("Jaws", "Steven Spielberg", 1975, true, 124, "Thriller");
+
+        //Assert
+        assertFalse(movie.hasBeenWatched());
+
+    }
+
+    @Test
+    void rememberDateTest(){
+        //Arrange
+        Movie movie = new Movie("Jaws", "Steven Spielberg", 1975, true, 124, "Thriller");
+        LocalDate date = LocalDate.of(2026, 10, 26);
+
+        //Act
+        movie.markAsWatched(date);
+
+        //Assert
+        assertEquals(date, movie.getLastWatched());
+    }
 }
