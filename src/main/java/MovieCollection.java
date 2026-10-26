@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class MovieCollection {
     private ArrayList<Movie> movies;
@@ -74,6 +75,10 @@ public class MovieCollection {
 
     public boolean deleteMovie(Movie movie) {
         return movies.remove(movie);  // TODO US6
+    }
+
+    public ArrayList<Movie> getMoviesNotWatchedSince(LocalDate date){
+        return null;
     }
 
 }

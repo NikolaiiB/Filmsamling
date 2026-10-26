@@ -28,4 +28,13 @@ public class Controller {
     public boolean deleteMovie(Movie movie){
         return movieCollection.deleteMovie(movie);
     }
+
+    public void markAsWatched(Movie movie){
+
+    }
+
+    public ArrayList<Movie> getMoviesNotWatchedForDays(int days){
+        return null;
+    }
+
 }
