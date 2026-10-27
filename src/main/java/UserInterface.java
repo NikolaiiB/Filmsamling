@@ -45,6 +45,18 @@ public class UserInterface {
             }
         }
 
+    private int readInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("\"" + input + "\" er ikke et helt tal. Prøv igen.");
+            }
+        }
+    }
+
         public void addMovie(){
             System.out.print("Titel: ");
             String title = scanner.nextLine().trim();
@@ -52,15 +64,13 @@ public class UserInterface {
             System.out.print("Instruktør: ");
             String author = scanner.nextLine().trim();
 
-            System.out.print("Årstal: ");
-            int yearCreated = Integer.parseInt(scanner.nextLine().trim());
+            int yearCreated = readInt("Årstal: ");
 
             System.out.print("I farve? (ja/nej): ");
             String answer = scanner.nextLine().trim();
             Boolean inColor = (answer.equalsIgnoreCase("ja"));
 
-            System.out.print("Længde i minutter: ");
-            int length = Integer.parseInt(scanner.nextLine().trim());
+            int length = readInt("Længde i minutter: ");
 
             System.out.print("Genre: ");
             String genre = scanner.nextLine().trim();
@@ -128,9 +138,7 @@ public class UserInterface {
             count++;
         }
 
-        System.out.print("Vælg nummer: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = readInt("Vælg nummer: ");
         Movie movie = matches.get(choice-1);
 
         return movie;
@@ -151,21 +159,12 @@ public class UserInterface {
         System.out.print("Instruktør " + "[" + movie.getDirector() + "]: ");
         String author = scanner.nextLine().trim();
 
-        System.out.print("Årstal " + "[" + movie.getYearCreated() + "]: ");
-        String yearCreated = scanner.nextLine().trim();
-        int newYearCreated = 0;
-        if(!yearCreated.isEmpty()) {
-            newYearCreated = Integer.parseInt(yearCreated);
-        }
+        int newYearCreated = readInt("Årstal " + "[" + movie.getYearCreated() + "]: ");
+
         System.out.print("I farve? (ja/nej) " + "[" + (movie.isInColor() ? "Ja" : "Nej") + "]: ");
         String inColor = scanner.nextLine().trim();
 
-        System.out.print("Længde i minutter " + "[" + movie.getLengthInMinutes() + "]: ");
-        String length = scanner.nextLine().trim();
-        int newLength = 0;
-        if(!length.isEmpty()) {
-            newLength = Integer.parseInt(length);
-        }
+        int newLength = readInt("Længde i minutter " + "[" + movie.getLengthInMinutes() + "]: ");
 
         System.out.print("Genre " + "[" + movie.getGenre() + "]: ");
         String genre = scanner.nextLine().trim();
@@ -217,8 +216,7 @@ public class UserInterface {
     }
 
     public void daysSinceWatched (){
-        System.out.print("Hvor mange dage siden mindst? ");
-        int choice = scanner.nextInt();
+        int choice = readInt("Hvor mange dage siden mindst? ");
         scanner.nextLine();
 
         System.out.println("Film du ikke har set i " + choice + " dage eller aldrig set: ");
