@@ -35,7 +35,7 @@ public class MovieCollection {
     }
 
     public boolean editMovie(Movie movie, String title, String director, int yearCreated,
-                             String inColor, int lengthInMinutes, String genre)
+                             boolean changeColor, int lengthInMinutes, String genre)
     {
         if (!movies.contains(movie))
         {
@@ -53,14 +53,14 @@ public class MovieCollection {
         {
             movie.setYearCreated(yearCreated);
         }
-        if (!inColor.isEmpty())
+        if (changeColor)
         {
-            boolean color = false;
-            if (inColor.equalsIgnoreCase("ja"))
-            {
-                color = true;
+            if(movie.isInColor()){
+                movie.setInColor(false);
             }
-            movie.setInColor(color);
+            else{
+                movie.setInColor(true);
+            }
         }
         if (!(lengthInMinutes == 0))
         {

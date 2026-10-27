@@ -182,15 +182,20 @@ public class UserInterface {
 
         int newYearCreated = readInt("Årstal " + "[" + movie.getYearCreated() + "]: ");
 
-        System.out.print("I farve? (ja/nej) " + "[" + (movie.isInColor() ? "Ja" : "Nej") + "]: ");
-        String inColor = scanner.nextLine().trim();
+        boolean changeColor = false;
+        if(movie.isInColor()){
+            changeColor = readYesOrNo("Ændre til sort/hvid? [Ja, Nej]: ");
+        }
+        else{
+            changeColor = readYesOrNo("Ændre til farver? [Ja, Nej]: ");
+        }
 
         int newLength = readInt("Længde i minutter " + "[" + movie.getLengthInMinutes() + "]: ");
 
         System.out.print("Genre " + "[" + movie.getGenre() + "]: ");
         String genre = scanner.nextLine().trim();
 
-        controller.editMovie(movie, newTitle, author, newYearCreated, inColor, newLength, genre);
+        controller.editMovie(movie, newTitle, author, newYearCreated, changeColor, newLength, genre);
         System.out.println("Filmen er opdateret");
 
         System.out.println();
