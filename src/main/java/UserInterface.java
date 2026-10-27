@@ -49,6 +49,10 @@ public class UserInterface {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+
+            if(input.isEmpty()){
+                return 0;
+            }
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -57,18 +61,35 @@ public class UserInterface {
         }
     }
 
-        public void addMovie(){
+    private boolean readYesOrNo(String prompt){
+        while(true){
+            System.out.print(prompt);
+            String answer = scanner.nextLine().trim();
+            if(answer.equalsIgnoreCase("ja") || answer.equalsIgnoreCase("j")){
+                return true;
+            }
+            else if(answer.equalsIgnoreCase("nej") || answer.equalsIgnoreCase("n")){
+                return false;
+            }
+                System.out.println("Skriv ja, j eller nej, n");
+        }
+    }
+    public void addMovie(){
             System.out.print("Titel: ");
             String title = scanner.nextLine().trim();
 
             System.out.print("Instruktør: ");
             String author = scanner.nextLine().trim();
 
-            int yearCreated = readInt("Årstal: ");
+            int yearCreated = 0;
+            while(yearCreated < 1888){
+                yearCreated = readInt("Årstal: ");
+                if(yearCreated < 1888){
+                    System.out.println("Skriv et årstal efter 1888");
+                }
+            }
 
-            System.out.print("I farve? (ja/nej): ");
-            String answer = scanner.nextLine().trim();
-            Boolean inColor = (answer.equalsIgnoreCase("ja"));
+            boolean inColor = readYesOrNo("I farve? (ja/nej): ");
 
             int length = readInt("Længde i minutter: ");
 
@@ -188,17 +209,13 @@ public class UserInterface {
             return;
         }
 
-        System.out.print("Vil du slette " + movie.getTitle() + "? (ja/nej): ");
-        String deleteChoice = scanner.nextLine().toLowerCase().trim();
-        if(deleteChoice.equals("ja")){
+        boolean delete = readYesOrNo("Vil du slette " + movie.getTitle() + "? (ja/nej): ");
+        if(delete){
             controller.deleteMovie(movie);
             System.out.println(movie.getTitle() + " er slettet");
         }
-        else if(deleteChoice.equals("nej")){
-            System.out.println("Intet er slettet");
-        }
         else{
-            System.out.println("Ugyldigt input. Intet er slettet");
+            System.out.println("Intet er slettet");
         }
     }
 
