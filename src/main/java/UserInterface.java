@@ -158,11 +158,20 @@ public class UserInterface {
             System.out.println(count + ". " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
             count++;
         }
+        int choice;
+        Movie movie = null;
 
-        int choice = readInt("Vælg nummer: ");
-        Movie movie = matches.get(choice-1);
-
-        return movie;
+        while(true){
+            choice = readInt("Vælg nummer: ");
+            try{
+                movie = matches.get(choice-1);
+                return movie;
+            }
+            catch(IndexOutOfBoundsException e){
+                System.out.println("Vælg et nummber på listen");
+                System.out.println();
+            }
+        }
     }
 
     public void editMovie(){
