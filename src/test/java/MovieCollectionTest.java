@@ -107,7 +107,7 @@ class MovieCollectionTest {
         Movie movie = collection.getMovies().get(0);
 
         //Act
-        boolean edit = collection.editMovie(movie,"Harry", "assas", 2020, "yes",210,"Action");
+        boolean edit = collection.editMovie(movie,"Harry", "assas", 2020, true,210,"Action");
 
         //Assert
         assertTrue(edit);
@@ -120,7 +120,7 @@ class MovieCollectionTest {
         Movie movie = new Movie("Harry","asa",20202,true, 2021, "Action");
 
         //Act
-        boolean edit = collection.editMovie(movie,"Harry", "assas", 2020, "yes",210,"Action");
+        boolean edit = collection.editMovie(movie,"Harry", "assas", 2020, true,210,"Action");
 
         //Assert
         assertFalse(edit);
