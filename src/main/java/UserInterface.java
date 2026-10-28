@@ -49,10 +49,6 @@ public class UserInterface {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
-
-            if(input.isEmpty()){
-                return 0;
-            }
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -81,13 +77,7 @@ public class UserInterface {
             System.out.print("Instruktør: ");
             String author = scanner.nextLine().trim();
 
-            int yearCreated = 0;
-            while(yearCreated < 1888){
-                yearCreated = readInt("Årstal: ");
-                if(yearCreated < 1888){
-                    System.out.println("Skriv et årstal efter 1888");
-                }
-            }
+            int yearCreated = readInt("Årstal: ");
 
             boolean inColor = readYesOrNo("I farve? (ja/nej): ");
 
@@ -96,8 +86,13 @@ public class UserInterface {
             System.out.print("Genre: ");
             String genre = scanner.nextLine().trim();
 
-            controller.addMovie(title, author, yearCreated, inColor, length, genre);
-            System.out.println(title + " er tilføjet til samlingen.");
+            try{
+                controller.addMovie(title, author, yearCreated, inColor, length, genre);
+                System.out.println(title + " er tilføjet til samlingen.");
+            }
+            catch(IllegalArgumentException e){
+                System.out.println("Filmen blev ikke oprettet. " + e.getMessage());
+            }
     }
 
     public void showMovies(ArrayList<Movie> movies){

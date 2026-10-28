@@ -12,12 +12,12 @@ public class Movie {
 
     public Movie(String title, String director, int yearCreated, boolean inColor,
                  int lengthInMinutes, String genre) {
-        this.title = title;
-        this.director = director;
-        this.yearCreated = yearCreated;
-        this.inColor = inColor;
-        this.lengthInMinutes = lengthInMinutes;
-        this.genre = genre;
+        setTitle(title);
+        setDirector(director);
+        setYearCreated(yearCreated);
+        setInColor(inColor);
+        setLengthInMinutes(lengthInMinutes);
+        setGenre(genre);
     }
 
     public String getTitle() {
@@ -45,14 +45,25 @@ public class Movie {
     }
 
     public void setTitle(String title) {
+
+        if(title.isBlank()){
+            throw new IllegalArgumentException("Titlen må ikke være tom");
+        }
         this.title = title;
     }
 
     public void setDirector(String director) {
+        if(director.isBlank()){
+            throw new IllegalArgumentException("Instruktør skal angives");
+        }
         this.director = director;
     }
 
     public void setYearCreated(int yearCreated) {
+        int latestYear = LocalDate.now().getYear() + 1;
+        if(yearCreated < 1888 || yearCreated > latestYear){
+            throw new IllegalArgumentException("Årstallet skal være mellem 1888 og " + latestYear);
+        }
         this.yearCreated = yearCreated;
     }
 
@@ -61,10 +72,17 @@ public class Movie {
     }
 
     public void setLengthInMinutes(int lengthInMinutes) {
+
+        if(lengthInMinutes < 1){
+            throw new IllegalArgumentException("Filmens længde kan ikke under 1 minut");
+        }
         this.lengthInMinutes = lengthInMinutes;
     }
 
     public void setGenre(String genre) {
+        if(genre.isBlank()){
+            throw new IllegalArgumentException("Genren må ikke være tom");
+        }
         this.genre = genre;
     }
 
