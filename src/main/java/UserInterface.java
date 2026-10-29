@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class UserInterface {
                 System.out.println("3. Søg efter film");
                 System.out.println("4. Rediger en film");
                 System.out.println("5. Slet en film");
-                System.out.println("6. Marker en film som set i dag");
+                System.out.println("6. Marker en film som set");
                 System.out.println("7. Find film du ikke har set længe");
                 System.out.println("0. Afslut");
                 System.out.print("Vælg: ");
@@ -49,6 +50,9 @@ public class UserInterface {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            if(input.isBlank()){
+                return 0;
+            }
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -70,6 +74,23 @@ public class UserInterface {
                 System.out.println("Skriv ja, j eller nej, n");
         }
     }
+
+    private LocalDate readDate(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                return LocalDate.now();
+            }
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                return LocalDate.parse(input, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("\"" + input + "\" er ikke en dato på formen dd-mm-åååå. Prøv igen.");
+            }
+        }
+    }
+
     public void addMovie(){
             System.out.print("Titel: ");
             String title = scanner.nextLine().trim();
@@ -153,20 +174,16 @@ public class UserInterface {
             System.out.println(count + ". " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
             count++;
         }
-        int choice;
-        Movie movie = null;
 
-        while(true){
-            choice = readInt("Vælg nummer: ");
-            try{
-                movie = matches.get(choice-1);
-                return movie;
-            }
-            catch(IndexOutOfBoundsException e){
-                System.out.println("Vælg et nummber på listen");
-                System.out.println();
-            }
+        int number = readInt("Vælg nummer (0 = fortryd): ");
+        while (number < 0 || number > matches.size()) {
+            System.out.println("Vælg et nummer mellem 1 og " + matches.size() + " – eller 0 for at fortryde.");
+            number = readInt("Vælg nummer (0 = fortryd): ");
         }
+        if (number == 0) {
+            return null;
+        }
+        return matches.get(number - 1);
     }
 
     public void editMovie(){
@@ -181,10 +198,20 @@ public class UserInterface {
         System.out.print("Titel " + "[" + movie.getTitle() + "]: ");
         String newTitle = scanner.nextLine().trim();
 
+        if(newTitle.isBlank()){
+            newTitle = movie.getTitle();
+        }
+
         System.out.print("Instruktør " + "[" + movie.getDirector() + "]: ");
-        String author = scanner.nextLine().trim();
+        String newDirector = scanner.nextLine().trim();
+        if(newDirector.isBlank()){
+            newDirector = movie.getDirector();
+        }
 
         int newYearCreated = readInt("Årstal " + "[" + movie.getYearCreated() + "]: ");
+        if(newYearCreated == 0){
+            newYearCreated = movie.getYearCreated();
+        }
 
         boolean changeColor = false;
         if(movie.isInColor()){
@@ -195,19 +222,30 @@ public class UserInterface {
         }
 
         int newLength = readInt("Længde i minutter " + "[" + movie.getLengthInMinutes() + "]: ");
+        if(newLength == 0){
+            newLength = movie.getLengthInMinutes();
+        }
 
         System.out.print("Genre " + "[" + movie.getGenre() + "]: ");
-        String genre = scanner.nextLine().trim();
+        String newGenre = scanner.nextLine().trim();
+        if(newGenre.isBlank()){
+            newGenre = movie.getGenre();
+        }
 
-        controller.editMovie(movie, newTitle, author, newYearCreated, changeColor, newLength, genre);
-        System.out.println("Filmen er opdateret");
+        try{
+            controller.editMovie(movie, newTitle, newDirector, newYearCreated, changeColor, newLength, newGenre);
+            System.out.println("Filmen er opdateret");
 
-        System.out.println();
-        System.out.println("Titel: " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
-        System.out.println("  Instruktør: " + movie.getDirector());
-        System.out.println("  Længde: " + movie.getLengthInMinutes() + " minutter, " + (movie.isInColor() ? "Farver" : "Sort/Hvid"));
-        System.out.println("  Genre: " + movie.getGenre());
-        System.out.println();
+            System.out.println();
+            System.out.println("Titel: " + movie.getTitle() + "(" + movie.getYearCreated() + ")");
+            System.out.println("  Instruktør: " + movie.getDirector());
+            System.out.println("  Længde: " + movie.getLengthInMinutes() + " minutter, " + (movie.isInColor() ? "Farver" : "Sort/Hvid"));
+            System.out.println("  Genre: " + movie.getGenre());
+            System.out.println();
+        }
+        catch(IllegalArgumentException e){
+            System.out.println("Filmen blev ikke opdateret. " + e.getMessage());
+        }
 
     }
 
@@ -235,10 +273,15 @@ public class UserInterface {
             return;
         }
 
+        LocalDate date = readDate("Hvornår så du filmen? (Enter = i dag) [dd-mm-åååå]: ");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        controller.markAsWatched(movie);
-        System.out.println(movie.getTitle() + " er markeret som set " + LocalDate.now().format(formatter));
+        try{
+            controller.markAsWatched(movie, date);
+            System.out.println(movie.getTitle() + " er markeret som set " + date.format(formatter));
+        }
+        catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void daysSinceWatched (){

@@ -41,18 +41,12 @@ public class MovieCollection {
         {
             return false;  // TODO US5
         }
-        if (!title.isEmpty())
-        {
-            movie.setTitle(title);
-        }
-        if (!director.isEmpty())
-        {
-            movie.setDirector(director);
-        }
-        if (!(yearCreated == 0))
-        {
-            movie.setYearCreated(yearCreated);
-        }
+
+        new Movie(title, director, yearCreated, changeColor, lengthInMinutes, genre);
+
+        movie.setTitle(title);
+        movie.setDirector(director);
+        movie.setYearCreated(yearCreated);
         if (changeColor)
         {
             if(movie.isInColor()){
@@ -62,14 +56,8 @@ public class MovieCollection {
                 movie.setInColor(true);
             }
         }
-        if (!(lengthInMinutes == 0))
-        {
-            movie.setLengthInMinutes(lengthInMinutes);
-        }
-        if (!genre.isEmpty())
-        {
-            movie.setGenre(genre);
-        }
+        movie.setLengthInMinutes(lengthInMinutes);
+        movie.setGenre(genre);
         return true;
     }
 

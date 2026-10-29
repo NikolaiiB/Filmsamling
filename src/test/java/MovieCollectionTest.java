@@ -117,7 +117,7 @@ class MovieCollectionTest {
     @Test
     void editMovie2() {
         //Arrange
-        Movie movie = new Movie("Harry","asa",20202,true, 2021, "Action");
+        Movie movie = new Movie("Harry","asa",2020,true, 2021, "Action");
 
         //Act
         boolean edit = collection.editMovie(movie,"Harry", "assas", 2020, true,210,"Action");
@@ -179,10 +179,21 @@ class MovieCollectionTest {
         assertTrue(result.contains(casablanca));
         assertFalse(result.contains(godfather));
         assertFalse(result.contains(godzilla));
-
-
-
     }
 
+    @Test
+    void editWithInvalidValueChangesNothing() {
+        // Arrange
+        Movie casablanca = collection.searchMovies("Casablanca").get(0);
+
+        // Act: ny titel er fin, men årstallet er ugyldigt
+        assertThrows(IllegalArgumentException.class,
+                () -> collection.editMovie(casablanca, "Casablanca 2", "Michael Curtiz", 1800, false,
+                        102, "Drama"));
+
+        // Assert: titlen er IKKE ændret – filmen er ikke blevet halvt redigeret
+        assertEquals("Casablanca", casablanca.getTitle());
+        assertEquals(1942, casablanca.getYearCreated());
+    }
 
 }

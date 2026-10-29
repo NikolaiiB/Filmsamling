@@ -95,6 +95,10 @@ public class Movie {
     }
 
     public void markAsWatched(LocalDate date){
+
+        if(date.isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("Sidst set kan ikke være i fremtiden");
+        }
         lastWatched = date;
     }
 

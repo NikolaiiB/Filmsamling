@@ -69,4 +69,60 @@ class MovieTest {
         //Assert
         assertEquals(date, movie.getLastWatched());
     }
+
+    @Test
+    void emptyTitleThrowsException(){
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Movie("", "hej", 2000, true, 120, "Gyser"));
+    }
+
+    @Test
+    void yearBefore1888IsRejected() {
+
+        Movie movie = new Movie("Jaws", "Steven Spielberg", 1888, true, 124, "Thriller");
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Movie("Jaws", "Steven Spielberg", 1887, true, 124, "Thriller"));
+
+        assertEquals(1888, movie.getYearCreated());
+    }
+
+    @Test
+    void yearAtLeastTwoYearsInFutureRejected(){
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Movie("Jaws", "Steven Spielberg", 2028, true, 124, "Thriller"));
+
+    }
+
+    @Test
+    void lengthZeroMinutesRejected(){
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Movie("Jaws", "Steven Spielberg", 1888, true, 0, "Thriller"));
+    }
+
+    @Test
+    void invalidSetterValueLeavesValueUnchanged(){
+        // Arrange
+        Movie movie = new Movie("Jaws", "SP", 1975, true, 124, "Thriller");
+
+        // Act + Assert: ugyldig værdi afvises
+        assertThrows(IllegalArgumentException.class,
+                () -> movie.setYearCreated(0));
+
+        // Assert: den tidligere værdi er bevaret
+        assertEquals(1975, movie.getYearCreated());
+    }
+
+    @Test
+    void markAsWatchedInFutureIsRejected(){
+
+        Movie movie = new Movie("Jaws", "SP", 1975, true, 124, "Thriller");
+
+        assertThrows(IllegalArgumentException.class,
+                () -> movie.markAsWatched(LocalDate.now().plusDays(1)));
+
+    }
 }
