@@ -13,15 +13,18 @@ public class MovieCollection {
 
         Movie movie = new Movie(title, director, yearCreated, inColor, lengthInMinutes, genre);
         movies.add(movie);
-        // TODO US1
+    }
+
+    public void addMovie(Movie movie) {
+        movies.add(movie);
     }
 
     public ArrayList<Movie> getMovies() {
-        return movies;   // TODO US3
+        return movies;
     }
 
     public int getNumberOfMovies() {
-        return movies.size();      // TODO
+        return movies.size();
     }
 
     public ArrayList<Movie> searchMovies(String searchText) {
@@ -39,7 +42,7 @@ public class MovieCollection {
     {
         if (!movies.contains(movie))
         {
-            return false;  // TODO US5
+            return false;
         }
         if (!title.isEmpty())
         {
@@ -74,7 +77,7 @@ public class MovieCollection {
     }
 
     public boolean deleteMovie(Movie movie) {
-        return movies.remove(movie);  // TODO US6
+        return movies.remove(movie);
     }
 
     public ArrayList<Movie> getMoviesNotWatchedSince(LocalDate date){
