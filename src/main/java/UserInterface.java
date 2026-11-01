@@ -16,6 +16,8 @@ public class UserInterface {
 
         public void startProgram() {
             System.out.println("Velkommen til min filmsamling");
+            loadMovies();
+
             String choice = "";
             while (!choice.equalsIgnoreCase("0")) {
                 System.out.println();
@@ -45,6 +47,8 @@ public class UserInterface {
 
 
             }
+
+            saveMovies();
         }
 
     private int readInt(String prompt) {
@@ -318,6 +322,20 @@ public class UserInterface {
             } catch (FileNotFoundException e){
                 System.out.println("Der er ingen gemt filmsamling endnu - du starter med en tom samling.");
             }
+    }
+
+    public void saveMovies(){
+            try{
+                boolean saved = controller.saveMoviesIfChanged();
+
+                if(saved){
+                    System.out.println("Filmsamlingen er gemt");
+                }else{
+                    System.out.println("Ingen ændringer - intet at gemme.");
+                }
+            } catch(FileNotFoundException e){
+                System.out.println("Filmsamlingen kunne ikke gemmes: " + e.getMessage());
+        }
     }
 
 

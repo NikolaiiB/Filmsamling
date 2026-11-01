@@ -16,6 +16,8 @@ public class Controller {
     public void addMovie(String title, String director, int yearCreated, boolean inColor,
                          int lengthInMinutes, String genre){
         movieCollection.addMovie(title, director, yearCreated, inColor, lengthInMinutes, genre);
+
+        changed = true;
     }
 
     public ArrayList<Movie> getMovies() {
@@ -26,17 +28,32 @@ public class Controller {
         return movieCollection.searchMovies(searchText);
     }
 
-    public boolean editMovie(Movie movie, String title, String director, int yearCreated, boolean changeColor,
+    public boolean editMovie(Movie movie, String title, String director,
+                             int yearCreated, boolean changeColor,
                              int lengthInMinutes, String genre){
-        return movieCollection.editMovie(movie, title, director, yearCreated, changeColor, lengthInMinutes, genre);
+        boolean edited = movieCollection.editMovie(movie, title, director,
+                yearCreated, changeColor, lengthInMinutes, genre);
+
+        if(edited){
+            changed = true;
+        }
+
+        return edited;
     }
 
     public boolean deleteMovie(Movie movie){
-        return movieCollection.deleteMovie(movie);
+        boolean deleted = movieCollection.deleteMovie(movie);
+
+        if(deleted){
+            changed = true;
+        }
+
+        return deleted;
     }
 
     public void markAsWatched(Movie movie, LocalDate date){
         movie.markAsWatched(date);
+        changed = true;
     }
 
     public ArrayList<Movie> getMoviesNotWatchedForDays(int days){
@@ -54,13 +71,17 @@ public class Controller {
     }
 
     public int loadMovies() throws FileNotFoundException {
-        //TODO
-        return 0;
+        ArrayList<Movie> movies = fileHandler.loadMovies();
+
+        for(Movie movie : movies){
+            movieCollection.addMovie(movie);
+        }
+
+        return movies.size();
     }
 
     public int getSkippedLineCount(){
-        //TODO
-        return 0;
+        return fileHandler.getSkippedLineCount();
     }
 
 }
