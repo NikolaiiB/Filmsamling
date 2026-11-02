@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.Disabled;
+import domainmodel.Movie;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

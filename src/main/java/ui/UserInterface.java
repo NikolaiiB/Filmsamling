@@ -1,3 +1,7 @@
+package ui;
+
+import domainmodel.*;
+
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

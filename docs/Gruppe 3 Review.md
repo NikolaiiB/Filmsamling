@@ -14,11 +14,11 @@ Før I kigger på koden, så kig på, hvad der ellers ligger i repositoriet.
 
 ## Klasser
 
-Der bør være mindst disse klasser: `Main`, `UserInterface`, `Controller`, `MovieCollection`,
+Der bør være mindst disse klasser: `Main`, `UserInterface`, `MovieCollection`,
 `Movie` og `FileHandler` – og en række comparator-klasser. Er nogle navngivet anderledes, så
 diskutér, om navnet er bedre, værre eller lige så godt.
 
-Gentag dette afsnit for `Movie`, `MovieCollection`, `Controller`, `UserInterface` og `FileHandler`.
+Gentag dette afsnit for `Movie`, `MovieCollection , `UserInterface` og `FileHandler`.
 Comparator-klasserne har deres eget afsnit længere nede.
 
 ### Klassen: `Movie`
@@ -60,8 +60,8 @@ Comparator-klasserne har deres eget afsnit længere nede.
 
 ### Konstruktivt
 * I editMovie(), kan man tilføje forkerte værdier, såsom årstal: 0 eller lændge: 0. Hvorfor det?
-* Hvorfor bruger i ikke Controller metoder?
+* Hvorfor bruger i ikke  metoder?
 * Hvad gør notSeenRecently() i UI?
 * Hvorfor har i ikke lavet en metode for sig til at validere selection? DNRY.
 * Hvorfor har i valgt at lave Enum til genre?
-* Controller har importeret packages som ikke bliver brugt. Hvorfor det?
+*  har importeret packages som ikke bliver brugt. Hvorfor det?
