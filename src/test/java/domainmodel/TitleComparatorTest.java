@@ -6,22 +6,28 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TitleComparatorTest {
-    private MovieCollection collection = new MovieCollection();
+    private MovieCollection collection;
+
+    private Movie theGodfather;
+    private Movie casablanca;
+    private Movie godzilla;
 
     @BeforeEach
     void setUp(){
-        collection.addMovie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
-        collection.addMovie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
-        collection.addMovie("Godzilla", "Ishirō Honda", 1954, false, 96, "Sci-fi");
+        collection = new MovieCollection();
+
+        theGodfather = new Movie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
+        casablanca = new Movie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
+        godzilla = new Movie("Godzilla", "Ishirō Honda", 1954, false, 150, "Sci-fi");
+
+        collection.addMovie(theGodfather);
+        collection.addMovie(casablanca);
+        collection.addMovie(godzilla);
     }
 
     @Test
     void titleComparatorSortsByTitleAlphabetically() {
         TitleComparator comparator = new TitleComparator();
-        Movie theGodfather = collection.getMovies().get(0);
-        Movie casablanca = collection.getMovies().get(1);
-        Movie godzilla = collection.getMovies().get(2);
-
 
         assertTrue(comparator.compare(casablanca, godzilla) < 0);
         assertTrue(comparator.compare(theGodfather, godzilla) > 0);
@@ -31,8 +37,6 @@ class TitleComparatorTest {
     @Test
     void titleComparatorIgnoresUpperLowerCase(){
         TitleComparator comparator = new TitleComparator();
-        Movie casablanca = collection.searchMovies("Casablanca").get(0);
-        Movie godzilla = collection.searchMovies("Godzilla").get(0);
 
         //To lowercase
         casablanca.setTitle("casablanca");

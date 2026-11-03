@@ -12,13 +12,17 @@ class MovieCollectionTest {
 
     private MovieCollection collection;
 
-    private Movie theGodfather = new Movie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
-    private Movie casablanca = new Movie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
-    private Movie godzilla = new Movie("Godzilla", "Ishirō Honda", 1954, false, 150, "Sci-fi");
+    private Movie theGodfather;
+    private Movie casablanca;
+    private Movie godzilla;
 
     @BeforeEach
     void setUp(){
         collection = new MovieCollection();
+
+        theGodfather = new Movie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
+        casablanca = new Movie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
+        godzilla = new Movie("Godzilla", "Ishirō Honda", 1954, false, 150, "Sci-fi");
 
         collection.addMovie(theGodfather);
         collection.addMovie(casablanca);
@@ -41,14 +45,13 @@ class MovieCollectionTest {
     @Test
     void addOneMovie() {
         //Arrange
-        MovieCollection collection2 = new MovieCollection();
-        collection2.addMovie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
+        collection.addMovie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
 
         //Act
-        int size = collection2.getNumberOfMovies();
+        int size = collection.getNumberOfMovies();
 
         //Assert
-        assertEquals(1, size);
+        assertEquals(4, size);
 
     }
 
@@ -108,7 +111,7 @@ class MovieCollectionTest {
     }
 
     @Test
-    void editMovie() {
+    void editMovieReturnsTrueAfterEdit() {
         //Arrange
         collection.getMovies().get(0);
         Movie movie = collection.getMovies().get(0);
@@ -122,7 +125,7 @@ class MovieCollectionTest {
     }
 
     @Test
-    void editMovie2() {
+    void editMovieNotInCollectionReturnsFalse() {
         //Arrange
         Movie movie = new Movie("Harry","asa",2020,true, 2021, "Action");
 
@@ -135,8 +138,6 @@ class MovieCollectionTest {
 
     @Test
     void deleteMovieRemovesIt() {
-        // Arrange
-        Movie casablanca = collection.searchMovies("Casablanca").get(0);
 
         // Act
         boolean deleted = collection.deleteMovie(casablanca);
@@ -170,21 +171,18 @@ class MovieCollectionTest {
 
     @Test
     void onlyMoviesWatchedBeforeDateAreIncluded(){
-        Movie godfather = collection.getMovies().get(0);
-        Movie casablanca = collection.getMovies().get(1);
-        Movie godzilla = collection.getMovies().get(2);
 
         LocalDate today = LocalDate.of(2026, 10, 26);
         LocalDate yesterday = today.minusDays(1);
         LocalDate tommorrow = today.plusDays(1);
 
-        godfather.markAsWatched(today);
+        theGodfather.markAsWatched(today);
         casablanca.markAsWatched(yesterday);
         godzilla.markAsWatched(tommorrow);
 
         ArrayList<Movie> result = collection.getMoviesNotWatchedSince(today);
         assertTrue(result.contains(casablanca));
-        assertFalse(result.contains(godfather));
+        assertFalse(result.contains(theGodfather));
         assertFalse(result.contains(godzilla));
     }
 

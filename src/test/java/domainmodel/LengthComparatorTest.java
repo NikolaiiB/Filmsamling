@@ -7,23 +7,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LengthComparatorTest {
 
+    private MovieCollection collection;
 
-    private MovieCollection collection = new MovieCollection();
+    private Movie theGodfather;
+    private Movie casablanca;
+    private Movie godzilla;
 
     @BeforeEach
     void setUp(){
-        collection.addMovie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
-        collection.addMovie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
-        collection.addMovie("Godzilla", "Ishirō Honda", 1954, false, 150, "Sci-fi");
+        collection = new MovieCollection();
+
+        theGodfather = new Movie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
+        casablanca = new Movie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
+        godzilla = new Movie("Godzilla", "Ishirō Honda", 1954, false, 150, "Sci-fi");
+
+        collection.addMovie(theGodfather);
+        collection.addMovie(casablanca);
+        collection.addMovie(godzilla);
     }
 
     @Test
     void lengthComparatorSortsShortestFirst() {
         LengthComparator comparator = new LengthComparator();
-        Movie casablanca = collection.searchMovies("Casablanca").get(0);
-        Movie godzilla = collection.searchMovies("Godzilla").get(0);
-        Movie theGodfather = collection.searchMovies("The Godfather").get(0);
-
         assertTrue(comparator.compare(casablanca, godzilla) < 0);
         assertTrue(comparator.compare(theGodfather, godzilla) > 0);
         assertTrue(comparator.compare(casablanca, casablanca) == 0);

@@ -128,7 +128,7 @@ class MovieTest {
     }
 
     @Test
-    void compareToSortsByTitle(){
+    void compareToMethodSortsByTitle(){
         Movie theGodfather = new Movie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
         Movie casablanca = new Movie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
 
