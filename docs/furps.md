@@ -3,7 +3,7 @@
 | | Krav | Opfyldt? | Hvor |
 |---|---|---|---|
 | F | Man kan søge på en del af en titel | Ja | US4, `domainmodel.MovieCollection` |
-| U |Programmet er let at bruge. |Ja | Menuerne er gennemskuelige og nemme at bruge|
-| R |Programmet går ikke ned ved bogstaver i årstal | Nej – del 6 |  |
+| U | Hovedmenuen vises igen efter en handling |Ja | US2, `UserInterface.startProgram`|
+| R |Programmet går ikke ned ved bogstaver i årstal | Ja | US10, `UserInterface.readInt` |
 | P |Samlingen gemmes kun, når data er ændret | Ja| US14, `Controller.saveMoviesIfChanged()` |
-| S |Progammet er let at vedligeholde og ændre |Ja |Al logik uden for userInterface er dækket af unit test |
+| S |Koden er opdelt efter ansvar |Ja |US15, ui, domainmodel og datasource |

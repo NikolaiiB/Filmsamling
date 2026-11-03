@@ -297,7 +297,6 @@ public class UserInterface {
 
     public void daysSinceWatched (){
         int choice = readInt("Hvor mange dage siden mindst? ");
-        scanner.nextLine();
 
         System.out.println("Film du ikke har set i " + choice + " dage eller aldrig set: ");
         ArrayList<Movie> result = controller.getMoviesNotWatchedForDays(choice);
@@ -354,7 +353,7 @@ public class UserInterface {
                 System.out.println("Vælg et tal fra listen");
             }
         }
-        while(choice < 0 || choice > 5);
+        while(choice <= 0 || choice > 5);
 
         SortField field = null;
 
