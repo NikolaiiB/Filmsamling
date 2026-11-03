@@ -1,4 +1,5 @@
-import domainmodel.Movie;
+package domainmodel;
+
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -125,4 +126,13 @@ class MovieTest {
                 () -> movie.markAsWatched(LocalDate.now().plusDays(1)));
 
     }
+
+    @Test
+    void compareToSortsByTitle(){
+        Movie theGodfather = new Movie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
+        Movie casablanca = new Movie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
+
+        assertTrue(casablanca.compareTo(theGodfather) < 0);
+    }
+
 }

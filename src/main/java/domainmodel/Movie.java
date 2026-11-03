@@ -107,10 +107,10 @@ public class Movie implements Comparable<Movie> {
     public long getDaysSinceWatched(LocalDate today){
         return ChronoUnit.DAYS.between(lastWatched, today);
     }
-
+    
     @Override
     public int compareTo(Movie other) {
         return title.compareToIgnoreCase(other.title);
     }
-
+    
 }

@@ -1,5 +1,5 @@
-import domainmodel.Movie;
-import domainmodel.MovieCollection;
+package domainmodel;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +12,17 @@ class MovieCollectionTest {
 
     private MovieCollection collection;
 
+    private Movie theGodfather = new Movie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
+    private Movie casablanca = new Movie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
+    private Movie godzilla = new Movie("Godzilla", "Ishirō Honda", 1954, false, 150, "Sci-fi");
+
     @BeforeEach
     void setUp(){
         collection = new MovieCollection();
-        collection.addMovie("The Godfather", "Francis Ford Coppola", 1972, true, 175, "Crime");
-        collection.addMovie("Casablanca", "Michael Curtiz", 1942, false, 102, "Drama");
-        collection.addMovie("Godzilla", "Ishirō Honda", 1954, false, 96, "Sci-fi");
+
+        collection.addMovie(theGodfather);
+        collection.addMovie(casablanca);
+        collection.addMovie(godzilla);
     }
 
     @Test
@@ -198,4 +203,24 @@ class MovieCollectionTest {
         assertEquals(1942, casablanca.getYearCreated());
     }
 
+    @Test
+    void getMoviesSortedByTitleReturnsInAlphabeticalOrder(){
+
+        ArrayList<Movie> sorted = collection.getMoviesSortedByTitle();
+
+        assertEquals(casablanca, sorted.get(0));
+        assertEquals(godzilla, sorted.get(1));
+        assertEquals(theGodfather, sorted.get(2));
+    }
+
+    @Test
+    void getMoviesSortedByDoesNotChangeGetMoviesOrder(){
+
+        ArrayList<Movie> sorted = collection.getMoviesSortedByTitle();
+
+        assertEquals(theGodfather, collection.getMovies().get(0));
+        assertEquals(casablanca, collection.getMovies().get(1));
+        assertEquals(godzilla, collection.getMovies().get(2));
+
+    }
 }
