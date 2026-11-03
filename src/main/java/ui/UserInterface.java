@@ -32,6 +32,7 @@ public class UserInterface {
                 System.out.println("5. Slet en film");
                 System.out.println("6. Marker en film som set");
                 System.out.println("7. Find film du ikke har set længe");
+                System.out.println("8. Sorter film");
                 System.out.println("0. Afslut");
                 System.out.print("Vælg: ");
 
@@ -39,12 +40,13 @@ public class UserInterface {
 
                 switch (choice) {
                     case "1" -> addMovie();
-                    case "2" -> showMovies(controller.getMovies());
+                    case "2" -> showMovies(controller.getMoviesSortedByTitle());
                     case "3" -> searchMovie();
                     case "4" -> editMovie();
                     case "5" -> deleteMovie();
                     case "6" -> markAsWatched();
                     case "7" -> daysSinceWatched();
+                    case "8" -> sortMoviesBy();
                     case "0" -> System.out.println("Program afsluttet");
                     default -> System.out.println("Ugyldig kommando");
                 }
@@ -342,6 +344,37 @@ public class UserInterface {
         }
     }
 
+    public void sortMoviesBy(){
+
+        int choice;
+
+        do{
+            choice = readInt("Sorter efter:\n1. Titel\n2. Instruktør\n3. Årstal\n4. Længde\n5. Genre\nVælg: ");
+            if(choice < 0 || choice > 5){
+                System.out.println("Vælg et tal fra listen");
+            }
+        }
+        while(choice < 0 || choice > 5);
+
+        SortField field = null;
+
+        try{
+            field = switch(choice){
+                case 1 -> SortField.TITLE;
+                case 2 -> SortField.DIRECTOR;
+                case 3 -> SortField.YEAR;
+                case 4 -> SortField.LENGTH;
+                case 5 -> SortField.GENRE;
+                default -> throw new IllegalArgumentException("Ugyldigt valg: " + choice);
+            };
+        } catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+
+        ArrayList sorted = controller.getMoviesSortedBy(field);
+
+        showMovies(sorted);
+    }
 
 
     }
