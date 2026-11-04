@@ -257,7 +257,6 @@ public class UserInterface {
         catch(IllegalArgumentException e){
             System.out.println("Filmen blev ikke opdateret. " + e.getMessage());
         }
-
     }
 
     public void deleteMovie(){
