@@ -1,0 +1,145 @@
+classDiagram
+    class Main {
+        +main(String[] args) void
+    }
+
+    class UserInterface {
+        -Scanner scanner
+        -Controller controller
+        +UserInterface()
+        +startProgram() void
+    }
+
+    class Controller {
+        -MovieCollection movieCollection
+        -FileHandler fileHandler
+        -boolean changed
+        +Controller()
+        +addMovie(String, String, int, boolean, int, String) void
+        +getMovies() ArrayList~Movie~
+        +searchMovies(String) ArrayList~Movie~
+        +editMovie(Movie, String, String, int, boolean, int, String) boolean
+        +deleteMovie(Movie) boolean
+        +markAsWatched(Movie, LocalDate) void
+        +getMoviesNotWatchedForDays(int) ArrayList~Movie~
+        +saveMoviesIfChanged() boolean
+        +loadMovies() int
+        +getSkippedLineCount() int
+        +getMoviesSortedByTitle() ArrayList~Movie~
+        +getMoviesSortedBy(SortField) ArrayList~Movie~
+        -comparatorFor(SortField) Comparator~Movie~
+    }
+
+    class MovieCollection {
+        -ArrayList~Movie~ movies
+        +MovieCollection()
+        +addMovie(String, String, int, boolean, int, String) void
+        +addMovie(Movie) void
+        +getMovies() ArrayList~Movie~
+        +getNumberOfMovies() int
+        +searchMovies(String) ArrayList~Movie~
+        +editMovie(Movie, String, String, int, boolean, int, String) boolean
+        +deleteMovie(Movie) boolean
+        +getMoviesNotWatchedSince(LocalDate) ArrayList~Movie~
+        +getMoviesSortedByTitle() ArrayList~Movie~
+        +getMoviesSorted(Comparator~Movie~) ArrayList~Movie~
+    }
+
+    class Movie {
+        -String title
+        -String director
+        -int yearCreated
+        -boolean inColor
+        -int lengthInMinutes
+        -String genre
+        -LocalDate lastWatched
+        +Movie(String, String, int, boolean, int, String)
+        +getTitle() String
+        +getDirector() String
+        +getYearCreated() int
+        +isInColor() boolean
+        +getLengthInMinutes() int
+        +getGenre() String
+        +setTitle(String) void
+        +setDirector(String) void
+        +setYearCreated(int) void
+        +setInColor(boolean) void
+        +setLengthInMinutes(int) void
+        +setGenre(String) void
+        +getLastWatched() LocalDate
+        +hasBeenWatched() boolean
+        +markAsWatched(LocalDate) void
+        +getDaysSinceWatched(LocalDate) long
+        +compareTo(Movie) int
+    }
+
+    class SortField {
+        <<enumeration>>
+        TITLE
+        DIRECTOR
+        YEAR
+        LENGTH
+        GENRE
+    }
+
+    class FileHandler {
+        -String fileName
+        -int skippedLineCount
+        -static final String HEADER
+        +FileHandler(String)
+        +saveMovies(ArrayList~Movie~) void
+        +loadMovies() ArrayList~Movie~
+        +getSkippedLineCount() int
+        -toCsvLine(Movie) String
+        -parseMovie(String) Movie
+    }
+
+    class ComparatorMovie {
+        <<interface>>
+        +compare(Movie, Movie) int
+    }
+
+    class ComparableMovie {
+        <<interface>>
+        +compareTo(Movie) int
+    }
+
+    class DirectorComparator {
+        +compare(Movie, Movie) int
+    }
+
+    class GenreComparator {
+        +compare(Movie, Movie) int
+    }
+
+    class LengthComparator {
+        +compare(Movie, Movie) int
+    }
+
+    class TitleComparator {
+        +compare(Movie, Movie) int
+    }
+
+    class YearComparator {
+        +compare(Movie, Movie) int
+    }
+
+    Main ..> UserInterface : opretter
+    UserInterface --> Controller : bruger
+    Controller --> MovieCollection : har
+    Controller --> FileHandler : bruger
+    Controller ..> SortField : vaelger sortering
+    Controller ..> DirectorComparator : opretter ved sortering
+    Controller ..> GenreComparator : opretter ved sortering
+    Controller ..> LengthComparator : opretter ved sortering
+    Controller ..> TitleComparator : opretter ved sortering
+    Controller ..> YearComparator : opretter ved sortering
+    MovieCollection "1" --> "0..*" Movie : indeholder
+    FileHandler ..> Movie : laeser og gemmer
+    DirectorComparator ..|> ComparatorMovie
+    GenreComparator ..|> ComparatorMovie
+    LengthComparator ..|> ComparatorMovie
+    TitleComparator ..|> ComparatorMovie
+    YearComparator ..|> ComparatorMovie
+    Movie ..|> ComparableMovie
+    ComparatorMovie ..> Movie : sammenligner
